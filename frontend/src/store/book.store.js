@@ -45,4 +45,25 @@ export const useBookStore = create((set) => ({
     }));
     return { success: true, message: data.message };
   },
+
+  updateBook: async (bookId, updatedBook) => {
+    const res = await fetch(`http://localhost:3000/api/books/${bookId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedBook),
+    });
+    const data = await res.json();
+    if (!data.success)
+      return {
+        success: false,
+        message: data.message,
+      };
+
+    //updating ui without refresh
+    set((state) =>
+      state.books.map((book) => (book._id === bookId ? data.data : book))
+    );
+  },
 }));

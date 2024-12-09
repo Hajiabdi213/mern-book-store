@@ -14,9 +14,9 @@ Modal.setAppElement("#root");
 const BookCard = ({ book }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [updatedBook, setUPdatedBook] = useState(book);
+  const [updatedBook, setUpdatedBook] = useState(book);
 
-  const { deleteBook } = useBookStore();
+  const { deleteBook, updateBook } = useBookStore();
   const handleDelete = (bookId) => {
     confirmAlert({
       title: "Confirm Deletion",
@@ -41,6 +41,10 @@ const BookCard = ({ book }) => {
         },
       ],
     });
+  };
+
+  const handleUpdateBook = async (bookId, updatedBook) => {
+    await updateBook(bookId, updatedBook);
   };
   return (
     <div className="bg-blue-50 rounded-xl shadow-md p-4">
@@ -123,6 +127,9 @@ const BookCard = ({ book }) => {
               placeholder="Book Title"
               className="p-2 rounded "
               value={updatedBook.title}
+              onChange={(e) =>
+                setUpdatedBook({ ...updatedBook, title: e.target.value })
+              }
             />
             <input
               type="text"
@@ -130,6 +137,9 @@ const BookCard = ({ book }) => {
               placeholder="Author Name"
               className="p-2 rounded "
               value={updatedBook.author}
+              onChange={(e) =>
+                setUpdatedBook({ ...updatedBook, author: e.target.value })
+              }
             />
             <input
               type="text"
@@ -137,6 +147,9 @@ const BookCard = ({ book }) => {
               placeholder="Language"
               className="p-2 rounded "
               value={updatedBook.language}
+              onChange={(e) =>
+                setUpdatedBook({ ...updatedBook, language: e.target.value })
+              }
             />
             <input
               type="text"
@@ -144,6 +157,9 @@ const BookCard = ({ book }) => {
               placeholder="Book Price"
               className="p-2 rounded "
               value={updatedBook.price}
+              onChange={(e) =>
+                setUpdatedBook({ ...updatedBook, price: e.target.value })
+              }
             />
             <input
               type="text"
@@ -151,18 +167,27 @@ const BookCard = ({ book }) => {
               placeholder="Cover Image URL"
               className="p-2 rounded "
               value={updatedBook.cover_image}
+              onChange={(e) =>
+                setUpdatedBook({ ...updatedBook, cover_image: e.target.value })
+              }
             />
             <textarea
               className="p-2 rounded "
               placeholder="Book Description"
               rows="4"
               value={updatedBook.description}
+              onChange={(e) =>
+                setUpdatedBook({ ...updatedBook, description: e.target.value })
+              }
             ></textarea>
           </div>
         </div>
         {/* Footer */}
         <div className="flex flex-col sm:flex-row  gap-5 mt-4">
-          <button className="p-2 sm:w-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 font-bold text-gray-700 rounded">
+          <button
+            onClick={() => handleUpdateBook(book._id, updatedBook)}
+            className="p-2 sm:w-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 font-bold text-gray-700 rounded"
+          >
             Update
           </button>
           <button className="p-2 sm:w-1/2 bg-gradient-to-r from-red-200 to-red-500 font-bold text-gray-700 rounded">
