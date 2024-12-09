@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useBookStore } from "../store/book.store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useNavigate } from "react-router-dom";
 const CreatePage = () => {
+  const navigate = useNavigate();
   const [newBook, setNewBook] = useState({
     title: "",
     author: "",
@@ -20,6 +21,7 @@ const CreatePage = () => {
     console.log(message);
     const notify = () => toast.success(message);
     notify(message);
+    navigate("/");
   };
 
   return (
