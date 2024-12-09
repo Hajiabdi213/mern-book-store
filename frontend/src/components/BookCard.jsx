@@ -45,7 +45,9 @@ const BookCard = ({ book }) => {
 
   const handleUpdateBook = async (bookId, updatedBook) => {
     await updateBook(bookId, updatedBook);
+    setIsModalOpen(false);
   };
+  console.log(updatedBook);
   return (
     <div className="bg-blue-50 rounded-xl shadow-md p-4">
       <img
@@ -83,7 +85,10 @@ const BookCard = ({ book }) => {
         <button className="text-xl mr-2 text-red-700 hover:text-red-800 transition-all duration-300">
           {" "}
           <span
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+              setIsModalOpen(true);
+              setUpdatedBook(book);
+            }}
             className="flex items-center gap-2"
           >
             <FiEdit />
@@ -190,7 +195,10 @@ const BookCard = ({ book }) => {
           >
             Update
           </button>
-          <button className="p-2 sm:w-1/2 bg-gradient-to-r from-red-200 to-red-500 font-bold text-gray-700 rounded">
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="p-2 sm:w-1/2 bg-gradient-to-r from-red-200 to-red-500 font-bold text-gray-700 rounded"
+          >
             Cancel
           </button>
         </div>
