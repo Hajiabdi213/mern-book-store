@@ -1,14 +1,16 @@
 import React from "react";
 import NavBar from "./components/NavBar";
 import { Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import CreatePage from "./pages/CreatePage";
 
 const App = () => {
   return (
     <div>
       <NavBar />
       <Routes>
-        <Route path="/" element={<h1>Hello form / route</h1>} />
-        <Route path="/create" element={<h1>Hello form /create route</h1>} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/create" element={<CreatePage />} />
       </Routes>
     </div>
   );
