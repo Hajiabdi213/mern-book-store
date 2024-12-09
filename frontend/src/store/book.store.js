@@ -73,4 +73,10 @@ export const useBookStore = create((set) => ({
       message: "Book updated successfully",
     };
   },
+
+  getOneBook: async (bookId) => {
+    const res = await fetch(`http://localhost:3000/api/books/${bookId}`);
+    const data = await res.json();
+    return data.data;
+  },
 }));

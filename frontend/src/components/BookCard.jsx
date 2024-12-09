@@ -7,6 +7,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { useState } from "react";
 
 import UpdateBookModal from "./UpdateBookModal";
+import { Link } from "react-router-dom";
 
 const BookCard = ({ book }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -62,14 +63,16 @@ const BookCard = ({ book }) => {
       </div>
       <hr className="bg-blue-100 h-[2px]" />
       <div className="flex items-center gap-6 my-3">
-        <button className="text-xl text-red-700 hover:text-red-800">
-          <span className="flex items-center gap-2">
-            <CgMoreO />
-            More
-          </span>
-        </button>
+        <Link to={`/${book._id}`}>
+          <button className="text-xl text-red-700 hover:text-red-800 hover:-translate-y-1 transition-all ">
+            <span className="flex items-center gap-2">
+              <CgMoreO />
+              More
+            </span>
+          </button>
+        </Link>
         <button
-          className="text-xl text-red-700 hover:text-red-800"
+          className="text-xl text-red-700 hover:text-red-800 hover:-translate-y-1 transition-all "
           onClick={() => {
             setUpdatedBook(book);
             setIsModalOpen(true);
@@ -82,7 +85,7 @@ const BookCard = ({ book }) => {
         </button>
         <button
           onClick={() => handleDelete(book._id)}
-          className="text-xl text-red-700 hover:text-red-800"
+          className="text-xl text-red-700 hover:text-red-800 hover:-translate-y-1 transition-all "
         >
           <span className="flex items-center gap-2">
             <FiTrash />

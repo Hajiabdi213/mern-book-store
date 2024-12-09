@@ -13,7 +13,7 @@ const NavBar = () => {
         </Link>
         <div className="">
           <Link to="/">
-            <button className="text-lg font-semibold mr-2 border-2 border-blue-200  p-2 rounded-lg">
+            <button className="text-lg font-semibold mr-2 border-2 border-blue-200  p-2 rounded-lg  ">
               <span className="flex items-center gap-2">
                 <FaHome className="inline-block  " />
                 Home
