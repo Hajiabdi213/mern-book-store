@@ -6,7 +6,7 @@ import CreatePage from "./pages/CreatePage";
 
 const App = () => {
   return (
-    <div className="bg-blue-100 h-screen">
+    <div className="bg-blue-100 font-mono">
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useBookStore } from "../store/book.store";
+import BookCard from "../components/BookCard";
 
 const HomePage = () => {
   const { getBooks, books } = useBookStore();
@@ -8,9 +9,9 @@ const HomePage = () => {
   }, []);
   console.log(books);
   return (
-    <div className="container mx-auto p-2">
+    <div className="container mx-auto p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 ">
       {books.map((book) => (
-        <h1 key={book._id}>{book.title}</h1>
+        <BookCard className key={book._id} book={book} />
       ))}
     </div>
   );
