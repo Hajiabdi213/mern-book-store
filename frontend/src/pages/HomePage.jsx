@@ -17,10 +17,8 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    getBooks(); // Call getBooks inside useEffect
-  }, []); // Empty dependency array means it runs once on component mount
-
-  console.log(courses);
+    getBooks();
+  }, []);
 
   return <div className="container mx-auto p-2">HomePage</div>;
 };
