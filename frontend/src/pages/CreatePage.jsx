@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useBookStore } from "../store/book.store";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreatePage = () => {
   const [newBook, setNewBook] = useState({
@@ -16,6 +18,8 @@ const CreatePage = () => {
     const { success, message } = await saveBook(newBook);
     console.log(success);
     console.log(message);
+    const notify = () => toast.success(message);
+    notify(message);
   };
 
   return (
@@ -94,6 +98,7 @@ const CreatePage = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
