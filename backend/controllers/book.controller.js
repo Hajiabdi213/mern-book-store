@@ -1,6 +1,14 @@
 import Book from "../model/books.model.js";
 
-export const getAllBooks = (req, res) => res.send({ message: "All Books" });
+export const getAllBooks = async (req, res) => {
+  try {
+    const books = await Book.find();
+
+    res.status(200).send({ success: true, data: books });
+  } catch (error) {
+    res.status(500).send({ success: false, message: `Error ${error.message}` });
+  }
+};
 export const getOneBook = (req, res) => res.send({ message: "Single Book" });
 export const saveBook = async (req, res) => {
   // let's get the data we want to save from req.body
