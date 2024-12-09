@@ -9,7 +9,19 @@ export const getAllBooks = async (req, res) => {
     res.status(500).send({ success: false, message: `Error ${error.message}` });
   }
 };
-export const getOneBook = (req, res) => res.send({ message: "Single Book" });
+export const getOneBook = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).send({ success: false, message: "invalid  id" });
+  }
+
+  try {
+    const book = await Book.findById(id);
+    res.status(200).send({ success: true, data: book });
+  } catch (error) {
+    res.status(404).send({ success: false, message: `error ${error.message}` });
+  }
+};
 export const saveBook = async (req, res) => {
   // let's get the data we want to save from req.body
   const book = req.body;
