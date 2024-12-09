@@ -1,22 +1,19 @@
 import { FiTrash, FiEdit } from "react-icons/fi";
-import { FaRegWindowClose } from "react-icons/fa";
-
 import { CgMoreO } from "react-icons/cg";
 import { useBookStore } from "../store/book.store";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
-import Modal from "react-modal";
 import { useState } from "react";
 
-Modal.setAppElement("#root");
+import UpdateBookModal from "./UpdateBookModal";
 
 const BookCard = ({ book }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [updatedBook, setUpdatedBook] = useState(book);
 
   const { deleteBook, updateBook } = useBookStore();
+
   const handleDelete = (bookId) => {
     confirmAlert({
       title: "Confirm Deletion",
@@ -25,29 +22,24 @@ const BookCard = ({ book }) => {
         {
           label: "Yes I'm Sure",
           onClick: async () => {
-            const { success, message } = await deleteBook(bookId);
+            const { success } = await deleteBook(bookId);
             if (success) {
-              console.log("Book Deleted Succesfully");
+              console.log("Book Deleted Successfully");
             } else {
               console.log("Failed to delete the Book");
             }
           },
         },
-        {
-          label: "No, Cancel the deletion",
-          onClick: () => {
-            console.log("Deletion canceled.");
-          },
-        },
+        { label: "No, Cancel the deletion", onClick: () => {} },
       ],
     });
   };
 
-  const handleUpdateBook = async (bookId, updatedBook) => {
-    await updateBook(bookId, updatedBook);
+  const handleUpdateBook = async () => {
+    await updateBook(book._id, updatedBook);
     setIsModalOpen(false);
   };
-  console.log(updatedBook);
+
   return (
     <div className="bg-blue-50 rounded-xl shadow-md p-4">
       <img
@@ -55,8 +47,8 @@ const BookCard = ({ book }) => {
         alt={book.title}
         className="w-full rounded-lg"
       />
-      <h2 className="text-2xl font-bold font-mono  text-blue-800 flex justify-between py-2">
-        <span> Title: {book.title}</span>
+      <h2 className="text-2xl font-bold font-mono text-blue-800 flex justify-between py-2">
+        <span>Title: {book.title}</span>
         <span>Price: {book.price}</span>
       </h2>
       <hr className="bg-blue-100 h-[2px]" />
@@ -67,37 +59,30 @@ const BookCard = ({ book }) => {
         <h2 className="text-lg text-blue-950 font-mono">
           Language: {book.language}
         </h2>
-        <h2 className="text-lg text-blue-950 font-mono">
-          Uploaded: {book.createdAt}
-        </h2>
-        <h2 className="text-lg text-blue-950 font-mono">
-          Updated: {book.updatedAt}
-        </h2>
       </div>
       <hr className="bg-blue-100 h-[2px]" />
       <div className="flex items-center gap-6 my-3">
-        <button className="text-xl mr-2 text-red-700 hover:text-red-800 transition-all duration-300">
+        <button className="text-xl text-red-700 hover:text-red-800">
           <span className="flex items-center gap-2">
             <CgMoreO />
             More
           </span>
         </button>
-        <button className="text-xl mr-2 text-red-700 hover:text-red-800 transition-all duration-300">
-          {" "}
-          <span
-            onClick={() => {
-              setIsModalOpen(true);
-              setUpdatedBook(book);
-            }}
-            className="flex items-center gap-2"
-          >
+        <button
+          className="text-xl text-red-700 hover:text-red-800"
+          onClick={() => {
+            setUpdatedBook(book);
+            setIsModalOpen(true);
+          }}
+        >
+          <span className="flex items-center gap-2">
             <FiEdit />
             Edit
           </span>
         </button>
         <button
           onClick={() => handleDelete(book._id)}
-          className="text-xl mr-2 text-red-700 hover:text-red-800 transition-all duration-300"
+          className="text-xl text-red-700 hover:text-red-800"
         >
           <span className="flex items-center gap-2">
             <FiTrash />
@@ -106,103 +91,13 @@ const BookCard = ({ book }) => {
         </button>
       </div>
 
-      <Modal
+      <UpdateBookModal
         isOpen={isModalOpen}
-        onRequestClose={() => setIsModalOpen(false)}
-        contentLabel="Example Modal"
-        className="max-w-[800px]  mx-auto my-auto bg-blue-50  mt-20 p-10 rounded-lg"
-      >
-        {/* Header */}
-        <div className="flex justify-between">
-          <h2 className="text-center text-2xl text-blue-900 font-semibold py-2 ">
-            Update Course
-          </h2>
-
-          <button onClick={() => setIsModalOpen(false)}>
-            <FaRegWindowClose className="text-2xl font-bold text-red-800" />
-          </button>
-        </div>
-        <hr className="my-4" />
-        {/* Content */}
-        <div>
-          <div className="flex flex-col gap-4">
-            <input
-              type="text"
-              name="title"
-              placeholder="Book Title"
-              className="p-2 rounded "
-              value={updatedBook.title}
-              onChange={(e) =>
-                setUpdatedBook({ ...updatedBook, title: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              name="author"
-              placeholder="Author Name"
-              className="p-2 rounded "
-              value={updatedBook.author}
-              onChange={(e) =>
-                setUpdatedBook({ ...updatedBook, author: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              name="language"
-              placeholder="Language"
-              className="p-2 rounded "
-              value={updatedBook.language}
-              onChange={(e) =>
-                setUpdatedBook({ ...updatedBook, language: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              name="price"
-              placeholder="Book Price"
-              className="p-2 rounded "
-              value={updatedBook.price}
-              onChange={(e) =>
-                setUpdatedBook({ ...updatedBook, price: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              name="image"
-              placeholder="Cover Image URL"
-              className="p-2 rounded "
-              value={updatedBook.cover_image}
-              onChange={(e) =>
-                setUpdatedBook({ ...updatedBook, cover_image: e.target.value })
-              }
-            />
-            <textarea
-              className="p-2 rounded "
-              placeholder="Book Description"
-              rows="4"
-              value={updatedBook.description}
-              onChange={(e) =>
-                setUpdatedBook({ ...updatedBook, description: e.target.value })
-              }
-            ></textarea>
-          </div>
-        </div>
-        {/* Footer */}
-        <div className="flex flex-col sm:flex-row  gap-5 mt-4">
-          <button
-            onClick={() => handleUpdateBook(book._id, updatedBook)}
-            className="p-2 sm:w-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 font-bold text-gray-700 rounded"
-          >
-            Update
-          </button>
-          <button
-            onClick={() => setIsModalOpen(false)}
-            className="p-2 sm:w-1/2 bg-gradient-to-r from-red-200 to-red-500 font-bold text-gray-700 rounded"
-          >
-            Cancel
-          </button>
-        </div>
-      </Modal>
+        onClose={() => setIsModalOpen(false)}
+        updatedBook={updatedBook}
+        setUpdatedBook={setUpdatedBook}
+        onUpdate={handleUpdateBook}
+      />
     </div>
   );
 };

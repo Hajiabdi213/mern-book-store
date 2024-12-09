@@ -58,12 +58,19 @@ export const useBookStore = create((set) => ({
     if (!data.success)
       return {
         success: false,
-        message: data.message,
+        message: "book updated successfully",
       };
 
     //updating ui without refresh
-    set((state) =>
-      state.books.map((book) => (book._id === bookId ? data.data : book))
-    );
+    set((state) => ({
+      books: state.books.map((book) =>
+        book._id === bookId ? { ...book, ...updatedBook } : book
+      ),
+    }));
+
+    return {
+      success: true,
+      message: "Book updated successfully",
+    };
   },
 }));
