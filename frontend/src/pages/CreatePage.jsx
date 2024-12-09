@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 const CreatePage = () => {
+  const [newBook, setNewBook] = useState({
+    title: "",
+    author: "",
+    description: "",
+    language: "",
+    cover_image: "",
+    price: "",
+  });
+
   return (
     <div>
       <div className="container p-4 mx-auto">
@@ -11,37 +20,61 @@ const CreatePage = () => {
           <div className="flex flex-col gap-4">
             <input
               type="text"
-              name="name"
+              name="title"
               placeholder="Book Title"
               className="p-2 rounded "
+              value={newBook.title}
+              onChange={(e) =>
+                setNewBook({ ...newBook, title: e.target.value })
+              }
             />
             <input
               type="text"
               name="author"
               placeholder="Author Name"
               className="p-2 rounded "
+              value={newBook.author}
+              onChange={(e) =>
+                setNewBook({ ...newBook, author: e.target.value })
+              }
             />
             <input
               type="text"
-              name="price"
+              name="language"
               placeholder="Language"
               className="p-2 rounded "
+              value={newBook.language}
+              onChange={(e) =>
+                setNewBook({ ...newBook, language: e.target.value })
+              }
             />
             <input
               type="text"
               name="price"
               placeholder="Book Price"
               className="p-2 rounded "
+              value={newBook.price}
+              onChange={(e) =>
+                setNewBook({ ...newBook, price: e.target.value })
+              }
             />
             <input
               type="text"
               name="image"
               placeholder="Cover Image URL"
               className="p-2 rounded "
+              value={newBook.cover_image}
+              onChange={(e) =>
+                setNewBook({ ...newBook, cover_image: e.target.value })
+              }
             />
             <textarea
               className="p-2 rounded "
               placeholder="Book Description"
+              value={newBook.description}
+              onChange={(e) =>
+                setNewBook({ ...newBook, description: e.target.value })
+              }
             ></textarea>
             <button className="p-2 bg-gradient-to-r from-cyan-400 to-blue-500 font-bold text-gray-700 rounded">
               Save Book
