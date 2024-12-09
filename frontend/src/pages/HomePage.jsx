@@ -1,26 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useBookStore } from "../store/book.store";
 
 const HomePage = () => {
-  const [courses, setCourses] = useState([]);
-
-  const getBooks = async () => {
-    try {
-      const res = await fetch("http://localhost:3000/api/books");
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      const data = await res.json();
-      setCourses(data); // Update state with fetched data
-    } catch (error) {
-      console.error("Error fetching books:", error);
-    }
-  };
-
+  const { getBooks, books } = useBookStore();
   useEffect(() => {
     getBooks();
   }, []);
-
-  return <div className="container mx-auto p-2">HomePage</div>;
+  console.log(books);
+  return (
+    <div className="container mx-auto p-2">
+      {books.map((book) => (
+        <h1 key={book._id}>{book.title}</h1>
+      ))}
+    </div>
+  );
 };
 
 export default HomePage;
