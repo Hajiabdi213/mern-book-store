@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useBookStore } from "../store/book.store";
 
 const CreatePage = () => {
   const [newBook, setNewBook] = useState({
@@ -9,6 +10,13 @@ const CreatePage = () => {
     cover_image: "",
     price: "",
   });
+
+  const { saveBook } = useBookStore();
+  const saveTheBook = async () => {
+    const { success, message } = await saveBook(newBook);
+    console.log(success);
+    console.log(message);
+  };
 
   return (
     <div>
@@ -72,11 +80,15 @@ const CreatePage = () => {
               className="p-2 rounded "
               placeholder="Book Description"
               value={newBook.description}
+              rows="4"
               onChange={(e) =>
                 setNewBook({ ...newBook, description: e.target.value })
               }
             ></textarea>
-            <button className="p-2 bg-gradient-to-r from-cyan-400 to-blue-500 font-bold text-gray-700 rounded">
+            <button
+              onClick={saveTheBook}
+              className="p-2 bg-gradient-to-r from-cyan-400 to-blue-500 font-bold text-gray-700 rounded"
+            >
               Save Book
             </button>
           </div>
