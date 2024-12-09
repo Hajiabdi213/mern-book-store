@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Book from "../model/books.model.js";
 
 export const getAllBooks = async (req, res) => {
@@ -45,6 +46,19 @@ export const saveBook = async (req, res) => {
   }
 };
 
-export const updateBook = (req, res) => res.send({ message: "Update a Book" });
+export const updateBook = async (req, res) => {
+  const { id } = req.params;
+  const newBook = req.body;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).send({ success: false, message: "invalid  id" });
+  }
+
+  try {
+    const book = await Book.findByIdAndUpdate(id, newBook, { new: true });
+    res.status(200).send({ success: true, updatedBook: book });
+  } catch (error) {
+    res.status(404).send({ success: false, message: `error ${error.message}` });
+  }
+};
 
 export const deleteBook = (req, res) => res.send("Deleting a book");
