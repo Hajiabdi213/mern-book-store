@@ -46,7 +46,7 @@ const BookCard = ({ book }) => {
       <img
         src={book.cover_image}
         alt={book.title}
-        className="w-full rounded-lg"
+        className="w-full object-cover rounded-lg h-[500px]"
       />
       <h2 className="text-2xl font-bold font-mono text-blue-800 flex justify-between py-2">
         <span>Title: {book.title}</span>
