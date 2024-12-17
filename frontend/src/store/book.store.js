@@ -5,7 +5,7 @@ export const useBookStore = create((set) => ({
 
   // Function get's data from the API and sets the state
   getBooks: async () => {
-    const res = await fetch("http://localhost:3000/api/books");
+    const res = await fetch("/api/books");
     const data = await res.json();
     set({ books: data.data });
   },
@@ -24,7 +24,7 @@ export const useBookStore = create((set) => ({
     }
 
     // let's save
-    const res = await fetch("http://localhost:3000/api/books", {
+    const res = await fetch("/api/books", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newBook),
@@ -35,7 +35,7 @@ export const useBookStore = create((set) => ({
   },
 
   deleteBook: async (bookId) => {
-    const res = await fetch(`http://localhost:3000/api/books/${bookId}`, {
+    const res = await fetch(`/api/books/${bookId}`, {
       method: "DELETE",
     });
     const data = await res.json();
@@ -47,7 +47,7 @@ export const useBookStore = create((set) => ({
   },
 
   updateBook: async (bookId, updatedBook) => {
-    const res = await fetch(`http://localhost:3000/api/books/${bookId}`, {
+    const res = await fetch(`/api/books/${bookId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +75,7 @@ export const useBookStore = create((set) => ({
   },
 
   getOneBook: async (bookId) => {
-    const res = await fetch(`http://localhost:3000/api/books/${bookId}`);
+    const res = await fetch(`/api/books/${bookId}`);
     const data = await res.json();
     return data.data;
   },
